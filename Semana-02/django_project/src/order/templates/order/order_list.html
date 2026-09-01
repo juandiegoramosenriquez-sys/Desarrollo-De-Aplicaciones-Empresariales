@@ -3,28 +3,46 @@
 {% block title %}Lista de Pedidos{% endblock %}
 
 {% block content %}
-    <h2>Pedidos de la Pizzería</h2>
-    <p><a href="{% url 'order_create' %}">Registrar Pedido</a> | <a href="{% url 'pizza_list' %}">Ver Menú</a></p>
-    <table>
-        <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>Teléfono</th>
-                <th>Pizza</th>
-                <th>Dirección</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for order in orders %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Pedidos de la Pizzería</h2>
+        <div>
+            <a href="{% url 'order_create' %}" class="btn btn-primary btn-sm">Registrar Pedido</a>
+            <a href="{% url 'pizza_list' %}" class="btn btn-outline-secondary btn-sm">Ver Menú</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle shadow-sm">
+            <thead class="table-dark">
                 <tr>
-                    <td>{{ order.customer_name }}</td>
-                    <td>{{ order.phone }}</td>
-                    <td>{{ order.pizza_name }}</td>
-                    <td>{{ order.address }}</td>
-                    <td>{{ order.status }}</td>
+                    <th>Cliente</th>
+                    <th>Teléfono</th>
+                    <th>Pizza</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.phone }}</td>
+                        <td>{{ order.pizza_name }}</td>
+                        <td>{{ order.address }}</td>
+                        <td>
+                            {% if order.status == 'Entregado' %}
+                                <span class="badge bg-success">{{ order.status }}</span>
+                            {% elif order.status == 'En preparación' %}
+                                <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                            {% elif order.status == 'Cancelado' %}
+                                <span class="badge bg-danger">{{ order.status }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ order.status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

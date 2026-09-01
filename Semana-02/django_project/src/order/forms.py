@@ -16,3 +16,13 @@ class OrderForm(forms.Form):
     status = forms.ChoiceField(
         choices=ESTADO_CHOICES, label='Estado del Pedido', widget=forms.Select
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['status'].widget.attrs.update({'class': 'form-select'})
+        self.fields['address'].widget.attrs.update({
+            'rows': 3,
+            'class': 'form-control'
+        })

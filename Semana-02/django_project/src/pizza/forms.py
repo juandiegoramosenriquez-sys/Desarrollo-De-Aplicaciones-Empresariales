@@ -23,3 +23,14 @@ class PizzaForm(forms.Form):
     stock_status = forms.ChoiceField(
         choices=STOCK_CHOICES, label='Estado del Stock', widget=forms.Select
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['dough_type'].widget.attrs.update({'class': 'form-select'})
+        self.fields['stock_status'].widget.attrs.update({'class': 'form-select'})
+        self.fields['ingredients'].widget.attrs.update({
+            'rows': 3,
+            'class': 'form-control'
+        })
