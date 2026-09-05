@@ -1,0 +1,19 @@
+<h2>Nueva reserva</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Cliente:</label>
+    <select name="cliente">
+        {% for c in clientes %}
+        <option value="{{ c.id }}">{{ c.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Horario:</label>
+    <select name="horario">
+        {% for h in horarios %}
+        <option value="{{ h.id }}">{{ h.cancha }} - {{ h.fecha }} {{ h.hora_inicio }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Guardar</button>
+</form>
