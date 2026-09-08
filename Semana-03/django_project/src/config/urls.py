@@ -1,9 +1,14 @@
 from django.contrib import admin
 from django.urls import path, include
-from canchas.views import inicio
+from django.shortcuts import redirect
+
+def redireccionar_a_inicio(request):
+    return redirect('inicio')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', inicio),
-    path('canchas/', include('canchas.urls')),
+    path('', redireccionar_a_inicio, name='root'),
+    path('', include('canchas.urls')),
+    path('pizza/', include('pizza.urls')),
+    path('order/', include('order.urls')),
 ]
